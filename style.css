@@ -26,11 +26,11 @@ body {
 }
 
 .fa {
-    color: white;
+    color: whitesmoke;
 }
 
 .main-container .btn-one i {
-    color: white;
+    color: whitesmoke;
     font-size: 20px;
     position: absolute;
     left: 16px;
@@ -66,4 +66,41 @@ body {
 
 #check:checked~.btn-two i {
     opacity: 1;
+}
+
+.msg{
+    color: whitesmoke;
+    /* margin-top: 120px;
+    margin-left: 26px; */
+    margin: 120px 0px 6px 26px;
+}
+
+.dropdown{
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown .dropdown-list {
+    background-color: rgb(14, 17, 23);
+    color: whitesmoke;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    font-size: 18px;
+    outline: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-list:hover {
+    background-color: rgb(38, 39, 48);
+}
+
+.dropdown .dropdown-list option {
+    background-color: rgb(14, 17, 23);
+    color: whitesmoke;
+    border-radius: 5px;
+}
+
+.dropdown .dropdown-list option:hover {
+    background-color: rgb(38, 39, 48);
 }

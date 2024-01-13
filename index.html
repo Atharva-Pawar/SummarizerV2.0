@@ -25,7 +25,17 @@
                 <i class="fa fa-times"></i>
             </label>
         </div>
-        <div class="side-bar"></div>
+        <div class="side-bar">
+            <div class="msg">Select your choice</div>
+            
+            <div class="dropdown">
+                <select class="dropdown-list" onchange="window.location.href = this.value;">
+                    <option value="#">Summarize Text</option>
+                    <option value="#">Summarize Document</option>
+                    <option value="#">Summarize YouTube Video</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
