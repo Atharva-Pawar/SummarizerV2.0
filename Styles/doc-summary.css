@@ -1,12 +1,44 @@
-* {
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(14, 17, 23);
+    color: white;
 }
 
-html,
-body {
+#container {
+    margin-top: 10%;
+    width: 300px;
     background-color: rgb(14, 17, 23);
+}
+
+#container p {
+    color: whitesmoke;
+}
+
+#drop-area {
+    padding: 20px;
+    color: whitesmoke;
+    background-color: #282828;
+    border-radius: 4%;
+}
+
+button {
+    background-color: rgb(14, 17, 23);
+    color: whitesmoke;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 7%;
+}
+
+.btn-one.nav-bar {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
 }
 
 .main-container {
@@ -16,9 +48,12 @@ body {
 .main-container .side-bar {
     position: fixed;
     height: 100vh;
-    width: 300px;
-    left: -300px;
+    width: 280px; 
+    top: 0;
+    left: -280px; 
     background-color: rgb(38, 39, 48);
+    display: flex;
+    flex-direction: column;
 }
 
 #check {
@@ -29,11 +64,10 @@ body {
     color: whitesmoke;
 }
 
-.main-container .btn-one i {
+.main-container .btn-one i,
+.main-container .btn-two i {
     color: whitesmoke;
     font-size: 20px;
-    position: absolute;
-    left: 16px;
     line-height: 60px;
     cursor: pointer;
     opacity: 1;
@@ -42,14 +76,9 @@ body {
 }
 
 .main-container .btn-two i {
-    font-size: 20px;
-    line-height: 60px;
-    position: absolute;
-    left: 260px;
-    cursor: pointer;
+    right: 100px; 
     opacity: 0;
-    transition: all 0.3s linear;
-    z-index: 1;
+    /* margin-left: -110%; */
 }
 
 .btn-one i:hover {
@@ -84,7 +113,6 @@ body {
     border: 1px solid whitesmoke;
     border-radius: 5px;
     font-size: 16px;
-    /* Adjust font size as needed */
     outline: none;
     padding: 10px;
     cursor: pointer;
@@ -102,27 +130,4 @@ body {
 
 .dropdown .dropdown-list option:hover {
     background-color: rgb(38, 39, 48);
-}
-
-.main-content{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgb(14, 17, 23);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: whitesmoke;
-    flex-direction: column;
-}
-
-.main-content img {
-    max-width: 100%; /* Make the image responsive */
-    height: auto;
-}
-
-.main-content h1 {
-    margin-top: 2%; /* Responsive margin */
-    font-size: 2em; /* Responsive font size using em units */
 }
