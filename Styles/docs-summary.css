@@ -61,26 +61,27 @@ button:hover {
   border-radius: 10px;
 }
 
-.content{
+.content {
   height: 80vh;
 }
 
 @media screen and (max-width: 600px) {
   textarea {
-      height: 150px;
+    height: 150px;
   }
 }
 
 .main-container {
-  position: relative;
+  display: flex;
 }
 
 .main-container .side-bar {
   position: fixed;
-  top: 0;
   height: 100vh;
   width: 300px;
+  left: -300px;
   background-color: rgb(38, 39, 48);
+  transition: left 0.3s ease;
 }
 
 #check {

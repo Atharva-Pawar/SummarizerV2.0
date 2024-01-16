@@ -19,6 +19,7 @@ body {
     width: 300px;
     left: -300px;
     background-color: rgb(38, 39, 48);
+    transition: left 0.3s ease;
 }
 
 #check {
