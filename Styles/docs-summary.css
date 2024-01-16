@@ -1,157 +1,166 @@
 body {
-    margin: 20px;
-    font-family: "Source Sans Pro", sans-serif;
-    color: #fafafa;
-    background-color: #060914d4; /* Set the background color to match the textarea */
-  }
-  
-  h1 {
-    text-align: center;
-    color: #fafafa;
-  }
-  
-  .text-input {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    color: #fafafa;
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: whitesmoke;
+  background-color: rgb(14, 17, 23);
+}
+
+h1 {
+  text-align: center;
+  color: whitesmoke;
+}
+
+.text-input {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: whitesmoke;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  box-sizing: border-box;
+  padding: 8px;
+  border: none;
+  outline: none;
+  margin-bottom: 10px;
+  font-size: 14px;
+  background-color: rgb(38, 39, 48);
+  color: whitesmoke;
+  border-radius: 10px;
+}
+
+button {
+  background-color: rgb(22, 28, 39);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+button:hover {
+  background-color: rgb(29, 38, 57);
+}
+
+#output {
+  margin-top: 20px;
+  border: 1px solid rgb(29, 38, 57);
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.content{
+  height: 80vh;
+}
+
+@media screen and (max-width: 600px) {
   textarea {
-    width: 100%;
-    height: 100px;
-    resize: none;
-    box-sizing: border-box;
-    padding: 8px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    font-size: 14px;
-    background-color: #333; 
-    color: whitesmoke;
-  }
-  
-  button {
-    background-color: rgb(22, 20, 80);
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    display: block;
-    font-size: 16px;
-  }
-  
-  button:hover {
-    background-color: rgb(255, 75, 75);
-  }
-  
-  #output {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-  
-  @media screen and (max-width: 600px) {
-    textarea {
       height: 150px;
-    }
   }
-  
+}
+
 .main-container {
-    position: relative;
+  position: relative;
 }
 
 .main-container .side-bar {
-    position: fixed;
-    height: 100vh;
-    width: 300px;
-    left: -300px;
-    background-color: rgb(38, 39, 48);
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 300px;
+  background-color: rgb(38, 39, 48);
 }
 
 #check {
-    display: none;
+  display: none;
 }
 
 .fa {
-    color: whitesmoke;
+  color: whitesmoke;
 }
 
 .main-container .btn-one i {
-    color: whitesmoke;
-    font-size: 20px;
-    position: absolute;
-    left: 16px;
-    line-height: 60px;
-    cursor: pointer;
-    opacity: 1;
-    transition: all 0.3s linear;
-    z-index: 1;
+  color: whitesmoke;
+  font-size: 20px;
+  position: absolute;
+  left: 16px;
+  line-height: 60px;
+  cursor: pointer;
+  opacity: 1;
+  transition: all 0.3s linear;
+  z-index: 1;
 }
 
 .main-container .btn-two i {
-    font-size: 20px;
-    line-height: 60px;
-    position: absolute;
-    left: 260px;
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.3s linear;
-    z-index: 1;
+  font-size: 20px;
+  line-height: 60px;
+  position: absolute;
+  left: 260px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s linear;
+  z-index: 1;
 }
 
 .btn-one i:hover {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 #check:checked~.side-bar {
-    left: 0px;
+  left: 0px;
 }
 
 #check:checked~.btn-one i {
-    opacity: 0;
+  opacity: 0;
 }
 
 #check:checked~.btn-two i {
-    opacity: 1;
+  opacity: 1;
 }
 
 .msg {
-    color: whitesmoke;
-    margin: 120px 0px 6px 26px;
+  color: whitesmoke;
+  margin: 120px 0px 6px 26px;
 }
 
 .dropdown {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .dropdown .dropdown-list {
-    background-color: rgb(14, 17, 23);
-    color: whitesmoke;
-    border: 1px solid whitesmoke;
-    border-radius: 5px;
-    font-size: 16px;
-    /* Adjust font size as needed */
-    outline: none;
-    padding: 10px;
-    cursor: pointer;
+  background-color: rgb(14, 17, 23);
+  color: whitesmoke;
+  border: 1px solid whitesmoke;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .dropdown .dropdown-list:hover {
-    background-color: rgb(38, 39, 48);
+  background-color: rgb(38, 39, 48);
 }
 
 .dropdown .dropdown-list option {
-    background-color: rgb(14, 17, 23);
-    color: whitesmoke;
-    border-radius: 5px;
+  background-color: rgb(14, 17, 23);
+  color: whitesmoke;
+  border-radius: 5px;
 }
 
 .dropdown .dropdown-list option:hover {
-    background-color: rgb(38, 39, 48);
+  background-color: rgb(38, 39, 48);
 }
