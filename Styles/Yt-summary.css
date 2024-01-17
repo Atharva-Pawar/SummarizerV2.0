@@ -35,15 +35,16 @@ input[type="url"]
     padding: 10px;
     box-sizing: border-box;
     border: none; 
+    outline: none;
     border-radius: 6px;
-    background-color: #282828; 
+    background-color: rgb(38, 39, 48); 
     color: whitesmoke; 
 }
 
 
 input[type="button"] {
     padding: 10px 15px;
-    background-color: #303030; 
+    background-color: rgb(38, 39, 48); 
     color: whitesmoke;
     border: none;
     border-radius: 6px;
@@ -52,7 +53,7 @@ input[type="button"] {
 }
 
 input[type="button"]:hover {
-    background-color: #282828; 
+    background-color: rgb(29, 38, 57);
 }
 
 
