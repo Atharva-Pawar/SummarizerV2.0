@@ -88,7 +88,6 @@ body {
     border: 1px solid whitesmoke;
     border-radius: 5px;
     font-size: 16px;
-    /* Adjust font size as needed */
     outline: none;
     padding: 10px;
     cursor: pointer;
@@ -115,8 +114,8 @@ body {
 }
 
 .heading {
+    margin-top: 10%;
     font-size: 1.5em;
-    margin-bottom: 15px;
 }
 
 .field1, .field2 {
@@ -125,7 +124,7 @@ body {
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: -5px;
 }
 
 input[type="url"]
@@ -158,7 +157,10 @@ input[type="button"]:hover {
 
 @media only screen and (max-width: 600px) {
     .container {
-        padding: 10px;
+        max-width: 85%;
+    }
+    .heading {
+        margin-top: 25%;
     }
 }
 

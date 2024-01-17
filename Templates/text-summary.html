@@ -51,9 +51,29 @@
   </body>
   <script src="../Scripts/script.js"></script>
   <script>
-    // JavaScript function to redirect based on the selected option
     function redirectPage(selectedValue) {
       window.location.href = selectedValue;
     }
+  
+function processText() {
+  var inputTextarea = document.getElementById('inputTextarea');
+  var outputSection = document.getElementById('output');
+  var summarizeButton = document.querySelector('button');
+
+  if (outputSection.style.display === 'none' || outputSection.style.display === '') {
+    outputSection.style.display = 'block';
+  } else {
+    outputSection.style.display = 'none';
+  }
+  summarizeButton.disabled = true;
+
+  inputTextarea.addEventListener('input', function() {
+    summarizeButton.disabled = false;
+    outputSection.style.display = 'none'; 
+  });
+}
+
+
   </script>
+  
 </html>
