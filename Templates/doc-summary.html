@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summarize Document</title>
+    <title>Summarizer</title>
     <link rel="stylesheet" href="../Styles/doc-summary.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -15,7 +15,7 @@
 <body>
     <div class="main-container">
         <input type="checkbox" id="check">
-        <div class="btn-one nav-bar">
+        <div class="btn-one">
             <label for="check">
                 <i class="fa fa-bars"></i>
             </label>
@@ -25,30 +25,40 @@
                 <i class="fa fa-times"></i>
             </label>
         </div>
-        
         <div class="side-bar">
-          
             <div class="msg">Select your choice</div>
             <div class="dropdown">
                 <select class="dropdown-list" onchange="redirectPage(this.value);">
                     <option value="">Select your choice</option>
-                    <option value="text-summarizer.html">Summarize Text</option>
-                    <option value="docs-summary.html">Summarize Document</option>
+                    <option value="Templates/docs-summary.html">Summarize Text</option>
+                    <option value="Templates/doc-summary.html">Summarize Document</option>
                     <option value="youtube-summarizer.html">Summarize YouTube Video</option>
                 </select>
             </div>
         </div>
-        <div id="container">
-            <h2>Summarize Document</h2>
-            <p>Upload your document here</p>
-            <div id="drop-area">
-                <p>Drag and drop file here</p>
-                <p>Limit 200MB per file - PDF</p>
-                <button onclick="document.getElementById('fileInput').click()">Browse files</button>
-                <input type="file" id="fileInput" style="display: none;" />
+
+        <div class="centered-container">
+            <div>
+                <h2>Summarize Document</h2>
+                <p class="Upload">Upload your document here :</p>
+                <div id="drop-area">
+                    <p>Drag and drop file here</p>
+                    <p>Limit 200MB per file - PDF</p>
+                    <button onclick="document.getElementById('fileInput').click()">Browse files</button>
+                    <input type="file" id="fileInput" style="display: none;" />
+                </div>
             </div>
         </div>
     </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // JavaScript function to redirect based on the selected option
+        function redirectPage(selectedValue) {
+            window.location.href = selectedValue;
+        }
+    </script>
 </body>
 
 </html>
