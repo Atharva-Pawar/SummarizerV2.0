@@ -1,26 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Styles/Yt-summary.css">
-    <title>video</title>
+    <title>Summarize YouTube-video</title>
+    <link rel="stylesheet" href="../Styles/yt-summary.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+    </style>
 </head>
-<body>
-    <form>
-    <div class="container">
-        
-        <p class="heading" style="font-weight: bold;">Summarize YouTube Video</p><br>
-        <div class="field1">
-            <label>Enter YouTube Video URL:</label><br>
-            <input type="url" name="url">
-        </div>
 
-        <div class="field2">
-            <input type="button" name="Summarize" value="Summarize">
+<body>
+    <div class="main-container">
+        <input type="checkbox" id="check">
+        <div class="btn-one">
+            <label for="check">
+                <i class="fa fa-bars"></i>
+            </label>
         </div>
-    
+        <div class="btn-two">
+            <label for="check">
+                <i class="fa fa-times"></i>
+            </label>
+        </div>
+        <div class="side-bar">
+            <div class="msg">Select your choice</div>
+            <div class="dropdown">
+                <select class="dropdown-list" onchange="redirectPage(this.value);">
+                    <option value="">Select your choice</option>
+                    <option value="../Templates/text-summary.html">Summarize Text</option>
+                    <option value="../Templates/doc-summary.html">Summarize Document</option>
+                    <option value="../Templates/yt-summary.html">Summarize YouTube Video</option>
+                </select>
+            </div>
+        </div>
+        <form>
+            <div class="container">
+                
+                <p class="heading" style="font-weight: bold;">Summarize YouTube Video</p><br>
+                <div class="field1">
+                    <label>Enter YouTube Video URL:</label><br>
+                    <input type="url" name="url">
+                </div>
+        
+                <div class="field2">
+                    <input type="button" name="Summarize" value="Summarize">
+                </div>
+            
+            </div>
+            </form>
     </div>
-    </form>
+
+    <script src="script.js"></script>
+
+    <script>
+        // JavaScript function to redirect based on the selected option
+        function redirectPage(selectedValue) {
+            window.location.href = selectedValue;
+        }
+    </script>
 </body>
+
 </html>
