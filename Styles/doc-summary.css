@@ -126,6 +126,12 @@ button {
     border-radius: 7%;
     margin-top:10px ;
 }
+
+button:hover{
+    background-color: rgb(29, 38, 57);
+    border: 1px solid rgb(14, 17, 23);
+}
+
 .centered-container {
     display: flex;
     justify-content: center;
