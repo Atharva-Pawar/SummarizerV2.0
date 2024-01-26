@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Summary Result</title>
+    <link rel="stylesheet" href="../static/styles/result.css" />
+    <!-- Include any additional styles or scripts here -->
+  </head>
+  <body>
+    <div class="main-container">
+      <input type="checkbox" id="check" />
+      <div class="btn-one">
+        <label for="check">
+          <i class="fa fa-bars"></i>
+        </label>
+      </div>
+      <div class="btn-two">
+        <label for="check">
+          <i class="fa fa-times"></i>
+        </label>
+      </div>
+      <div class="side-bar">
+        <!-- Sidebar content, if any -->
+      </div>
+    </div>
+
+    <div class="main-content">
+      <h1>Summary Result</h1>
+      <div id="result-container">
+        <!-- Display the result here -->
+        {{ result | safe }}
+      </div>
+    </div>
+
+    <script src="../static/script/script.js"></script>
+    <script>
+      function redirectPage(selectedValue) {
+        window.location.href = selectedValue;
+      }
+    </script>
+  </body>
+</html>
