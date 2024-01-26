@@ -42,7 +42,11 @@
     <h1>Summarization Text</h1>
     <div class="text-input">
       <label for="inputTextarea">Enter your text here:</label>
-      <form method="post" action="/summarize_text">
+      <form
+        method="post"
+        action="/summarize_text"
+        onsubmit="return submitForm()"
+      >
         <textarea
           name="input_text"
           id="inputTextarea"
@@ -51,17 +55,37 @@
         <button type="submit">Summarize Text</button>
       </form>
 
-      <div id="output">
-        <h3>Processed Text:</h3>
-        <p id="processedText">{{ result | safe }}</p>
-        <!-- Use |safe to render HTML content -->
+      <div id="result-container">
+        <h3>Summarized Text:</h3>
+        <p id="processedText">No result available yet.</p>
+      </div>
     </div>
-    </div>
-    <script src="../static/script/script.js"></script>
     <script>
-      function redirectPage(selectedValue) {
-        window.location.href = selectedValue;
+      function submitForm() {
+        const form = document.querySelector("form");
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const processedText = data.result || "";
+            const resultContainer = document.getElementById("processedText");
+
+            if (resultContainer) {
+              resultContainer.innerHTML = processedText;
+            } else {
+              console.error("Error: 'processedText' not found in the HTML");
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+
+        // Prevent the form from navigating away
+        return false;
       }
     </script>
+    <!-- <script src="../static/script/script.js"></script> -->
   </body>
 </html>
