@@ -38,7 +38,7 @@
           </select>
         </div>
       </div>
-      <form action="/summarize_youtube" method="post" class="container">
+      <form action="/summarize_youtube" method="post" class="container" onsubmit="return submitForm()">
         <p class="heading" style="font-weight: bold">Summarize YouTube Video</p>
         <br />
         <div class="field1">
@@ -49,15 +49,56 @@
         <div class="field2">
           <input type="submit" name="Summarize" value="Summarize" />
         </div>
+        <div id="result-container">
+          <h3>Processed Video Summary:</h3>
+          <p id="videoSummary">No result available yet.</p>
+        </div>
       </form>
     </div>
 
-    <script src="../static/script/script.js"></script>
+    <!-- <script src="../static/script/script.js"></script> -->
 
     <script>
       function redirectPage(selectedValue) {
         window.location.href = selectedValue;
       }
+    
+      function submitForm() {
+        const form = document.querySelector("form");
+        const formData = new FormData(form);
+    
+        fetch(form.action, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(Object.fromEntries(formData)),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const videoSummary = data.result || "";
+            const resultContainer = document.getElementById("videoSummary");
+    
+            if (resultContainer) {
+              resultContainer.innerHTML = videoSummary;
+            } else {
+              console.error("Error: 'videoSummary' not found in the HTML");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert(`Error: ${error.message}`);
+          });
+    
+        // Prevent the form from navigating away
+        return false;
+      }
     </script>
+    
   </body>
 </html>

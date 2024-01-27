@@ -4,6 +4,7 @@ from PyPDF2 import PdfReader
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 import os
+import json
 
 app = Flask(__name__)
 
@@ -80,20 +81,32 @@ def summarize_document():
     return render_template('doc-summary.html')
 
 
+# Flask Routes
+
 @app.route('/summarize_youtube', methods=['GET', 'POST'])
 def summarize_youtube():
     if request.method == 'POST':
-        video_url = request.form['video_url']
-        language = request.form['language']
+        try:
+            # Get JSON data from the request
+            data = json.loads(request.data)
 
-        video_path = download_youtube_video(video_url)
-        transcript = extract_transcript(video_url, language)
+            # Extract the required information from the JSON data
+            video_url = data.get('video_url', '')
+            language = data.get('language', 'en')
 
-        if transcript:
-            video_summary = text_summary(transcript)
-            return render_template('yt-summary.html', video_summary=video_summary)
-        else:
-            return render_template('yt-summary.html', error_message="Failed to fetch transcript. Please check the video URL.")
+            # Your existing code for processing YouTube videos
+            video_path = download_youtube_video(video_url)
+            transcript = extract_transcript(video_url, language)
+
+            if transcript:
+                video_summary = text_summary(transcript)
+                return jsonify({'result': video_summary})
+            else:
+                return jsonify({'error': 'Failed to fetch transcript. Please check the video URL.'}), 400
+
+        except json.JSONDecodeError:
+            return jsonify({'error': 'Invalid JSON data'}), 400
+
     return render_template('yt-summary.html')
 
 
