@@ -61,6 +61,10 @@
       </div>
     </div>
     <script>
+      function redirectPage(selectedValue) {
+        window.location.href = selectedValue;
+      }
+      
       function submitForm() {
         const form = document.querySelector("form");
         const formData = new FormData(form);
