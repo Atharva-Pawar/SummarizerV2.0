@@ -115,21 +115,37 @@ body {
     color: whitesmoke;
     background-color: rgb(38, 39, 48);
     border-radius: 4%;
+    margin-bottom: 20px;
 }
 
-button {
+.browse-btn {
     background-color: rgb(14, 17, 23);
     color: whitesmoke;
     border: none;
     padding: 10px;
     cursor: pointer;
     border-radius: 7%;
-    margin-top:10px ;
+    margin-top: 10px;
 }
 
-button:hover{
+.browse-btn:hover {
     background-color: rgb(29, 38, 57);
     border: 1px solid rgb(14, 17, 23);
+}
+
+.summarize-btn {
+    background-color: rgb(38, 39, 48);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.summarize-btn:hover {
+    background-color: rgb(29, 38, 57);
 }
 
 .centered-container {
@@ -138,6 +154,7 @@ button:hover{
     align-items: center;
     height: 50vh;
 }
-.Upload{
+
+.Upload {
     margin-bottom: 20px;
 }

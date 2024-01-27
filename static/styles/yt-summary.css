@@ -140,7 +140,7 @@ input[type="url"]
 }
 
 
-input[type="button"] {
+input[type="submit"] {
     padding: 10px 15px;
     background-color: rgb(38, 39, 48); 
     color: whitesmoke;
@@ -150,7 +150,7 @@ input[type="button"] {
     font-size: 16px;
 }
 
-input[type="button"]:hover {
+input[type="submit"]:hover {
     background-color: rgb(29, 38, 57);
 }
 
