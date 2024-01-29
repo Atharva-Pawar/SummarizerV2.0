@@ -28,8 +28,8 @@ Explore the power of summarization with Summarizer! Check out the repository her
 - **Set Up Virtual Environment:**
 
 ```bash
-cd Summarizer
-python -m venv venv
+cd SummarizerV2.0/
+python3 -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ```
 
