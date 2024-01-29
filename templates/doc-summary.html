@@ -47,11 +47,12 @@
             method="post"
             action="/summarize_document"
             enctype="multipart/form-data"
+            onsubmit="return submitForm()"
           >
             <div id="drop-area">
               <p>Drag and drop file here</p>
               <p>Limit 200MB per file - PDF</p>
-              <button class="browse-btn" onclick="document.getElementById('fileInput').click()">
+              <button onclick="document.getElementById('fileInput').click()">
                 Browse files
               </button>
               <input
@@ -61,17 +62,53 @@
                 style="display: none"
               />
             </div>
-            <button class="summarize-btn" type="submit">Summarize</button>
+            <button type="submit">Summarize Document</button>
           </form>
+          <div id="result-container" style="display: none">
+            <h3>Document Summary:</h3>
+            <p id="docSummary"></p>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="../static/script/script.js"></script>
-
     <script>
-      function redirectPage(selectedValue) {
-        window.location.href = selectedValue;
+      function submitForm() {
+        const form = document.querySelector("form");
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const docSummary = data.doc_summary || "";
+            const resultContainer = document.getElementById("result-container");
+
+            if (resultContainer) {
+              // Show the result container
+              resultContainer.style.display = "block";
+
+              // Update the content
+              const docSummaryContainer = document.getElementById("docSummary");
+
+              if (docSummaryContainer) {
+                docSummaryContainer.innerHTML = docSummary;
+              } else {
+                console.error("Error: Container not found in the HTML");
+              }
+            } else {
+              console.error("Error: Result container not found in the HTML");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert(`Error: ${error.message}`);
+          });
+
+        // Prevent the form from navigating away
+        return false;
       }
     </script>
   </body>
