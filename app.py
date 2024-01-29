@@ -5,6 +5,7 @@ from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 import os
 import json
+import re
 
 app = Flask(__name__)
 
@@ -32,8 +33,12 @@ def extract_text_from_pdf(file_path):
 def download_youtube_video(video_url):
     yt = YouTube(video_url)
     video_stream = yt.streams.filter(file_extension="mp4").first()
-    video_path = os.path.join("static/videos", f"{yt.title}.mp4")
-    video_stream.download(output_path="static/videos", filename=yt.title)
+
+    # Sanitize the title to remove invalid characters
+    title = re.sub(r'[<>:"/\\|?*]', '', yt.title)
+
+    video_path = os.path.join("static/videos", f"{title}.mp4")
+    video_stream.download(output_path="static/videos", filename=title)
     return video_path
 
 
