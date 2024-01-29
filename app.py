@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from txtai.pipeline import Summary
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfReader  # Add this line
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 import os
@@ -18,12 +18,15 @@ def text_summary(text, maxlength=None):
 
 
 def extract_text_from_pdf(file_path):
-    with open(file_path, "rb") as f:
-        pdf_reader = PdfReader(f)
-        text = ""
-        for page_number in range(len(pdf_reader.pages)):
-            text += pdf_reader.pages[page_number].extract_text()
-    return text
+    try:
+        with open(file_path, "rb") as f:
+            pdf_reader = PdfReader(f)
+            text = ""
+            for page_number in range(len(pdf_reader.pages)):
+                text += pdf_reader.pages[page_number].extract_text()
+        return text
+    except PyPDF2.errors.EmptyFileError:
+        return None
 
 
 def download_youtube_video(video_url):
@@ -72,16 +75,25 @@ def summarize_text():
 @app.route('/summarize_document', methods=['GET', 'POST'])
 def summarize_document():
     if request.method == 'POST':
-        input_file = request.files['input_file']
-        input_file.save('static/uploaded_docs/doc_file.pdf')
-        extracted_text = extract_text_from_pdf(
-            'static/uploaded_docs/doc_file.pdf')
-        doc_summary = text_summary(extracted_text)
-        return render_template('doc-summary.html', extracted_text=extracted_text, doc_summary=doc_summary)
+        try:
+            input_file = request.files['input_file']
+            file_path = 'static/uploaded_docs/doc_file.pdf'
+            input_file.save(file_path)
+
+            extracted_text = extract_text_from_pdf(file_path)
+
+            if extracted_text is None:
+                return jsonify({'error': 'Empty or invalid PDF file.'}), 400
+
+            doc_summary = text_summary(extracted_text)
+            return jsonify({'extracted_text': extracted_text, 'doc_summary': doc_summary})
+
+        except Exception as e:
+            # Return the exception message as an error
+            return jsonify({'error': str(e)}), 500
+
     return render_template('doc-summary.html')
 
-
-# Flask Routes
 
 @app.route('/summarize_youtube', methods=['GET', 'POST'])
 def summarize_youtube():
