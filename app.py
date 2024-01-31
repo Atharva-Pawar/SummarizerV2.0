@@ -6,6 +6,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 import os
 import json
 import re
+import pyttsx3
 
 app = Flask(__name__)
 
@@ -73,7 +74,14 @@ def summarize_text():
     if request.method == 'POST':
         input_text = request.form['input_text']
         result = text_summary(input_text)
-        return jsonify({'result': result})
+        
+        # Code for tts
+        text_speech = pyttsx3.init()
+        text_speech.say(result)
+        text_speech.runAndWait()
+        
+        return jsonify({'result': result, 'speech_status': 'success'})
+
     return render_template('text-summary.html')
 
 
