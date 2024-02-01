@@ -118,6 +118,11 @@ body {
     flex-direction: column;
 }
 
+.main-content #type {
+    font-weight: bolder;
+    font-size: 30px;
+}
+
 .main-content img {
     max-width: 100%; /* Make the image responsive */
     height: auto;
