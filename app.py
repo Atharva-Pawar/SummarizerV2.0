@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, jsonify
 from txtai.pipeline import Summary
-from PyPDF2 import PdfReader  # Add this line
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 import os
 import json
 import re
 import pyttsx3
+import time
 
 app = Flask(__name__)
 
@@ -69,19 +69,16 @@ def index():
     return render_template('index.html')
 
 
+# Flask Routes
 @app.route('/summarize_text', methods=['GET', 'POST'])
 def summarize_text():
     if request.method == 'POST':
         input_text = request.form['input_text']
         result = text_summary(input_text)
-        
-        # Code for tts
-        text_speech = pyttsx3.init()
-        text_speech.say(result)
-        text_speech.runAndWait()
-        
-        return jsonify({'result': result, 'speech_status': 'success'})
 
+        return jsonify({'result': result})
+
+    # Handle GET requests separately, possibly render a template or return a specific response
     return render_template('text-summary.html')
 
 
