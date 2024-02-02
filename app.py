@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify
 from txtai.pipeline import Summary
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
+from PyPDF2 import PdfReader
+from PyPDF2 import PdfFileReader  # Add this import
 import os
 import json
 import re
@@ -27,7 +29,7 @@ def extract_text_from_pdf(file_path):
             for page_number in range(len(pdf_reader.pages)):
                 text += pdf_reader.pages[page_number].extract_text()
         return text
-    except PyPDF2.errors.EmptyFileError:
+    except Exception as e:
         return None
 
 
@@ -88,6 +90,10 @@ def summarize_document():
         try:
             input_file = request.files['input_file']
             file_path = 'static/uploaded_docs/doc_file.pdf'
+
+            # Ensure the 'static/uploaded_docs/' directory exists
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
             input_file.save(file_path)
 
             extracted_text = extract_text_from_pdf(file_path)
@@ -99,7 +105,8 @@ def summarize_document():
             return jsonify({'extracted_text': extracted_text, 'doc_summary': doc_summary})
 
         except Exception as e:
-            # Return the exception message as an error
+            import traceback
+            traceback.print_exc()  # Print the full traceback to the console
             return jsonify({'error': str(e)}), 500
 
     return render_template('doc-summary.html')

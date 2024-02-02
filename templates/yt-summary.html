@@ -38,7 +38,12 @@
           </select>
         </div>
       </div>
-      <form action="/summarize_youtube" method="post" class="container" onsubmit="return submitForm()">
+      <form
+        action="/summarize_youtube"
+        method="post"
+        class="container"
+        onsubmit="return submitForm()"
+      >
         <p class="heading" style="font-weight: bold">Summarize YouTube Video</p>
         <br />
         <div class="field1">
@@ -52,25 +57,26 @@
         <div id="result-container">
           <h3>Processed Video Summary:</h3>
           <p id="videoSummary">No result available yet.</p>
+          <button onclick="speakSummary()" class="summary-button">
+            Read Summary
+          </button>
         </div>
       </form>
     </div>
-
-    <!-- <script src="../static/script/script.js"></script> -->
 
     <script>
       function redirectPage(selectedValue) {
         window.location.href = selectedValue;
       }
-    
+
       function submitForm() {
         const form = document.querySelector("form");
         const formData = new FormData(form);
-    
+
         fetch(form.action, {
           method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(Object.fromEntries(formData)),
         })
@@ -83,7 +89,7 @@
           .then((data) => {
             const videoSummary = data.result || "";
             const resultContainer = document.getElementById("videoSummary");
-    
+
             if (resultContainer) {
               resultContainer.innerHTML = videoSummary;
             } else {
@@ -94,11 +100,24 @@
             console.error("Error:", error);
             alert(`Error: ${error.message}`);
           });
-    
+
         // Prevent the form from navigating away
         return false;
       }
+
+      function speakSummary() {
+        const videoSummary =
+          document.getElementById("videoSummary").textContent;
+
+        if ("speechSynthesis" in window) {
+          const synthesis = window.speechSynthesis;
+          const utterance = new SpeechSynthesisUtterance(videoSummary);
+
+          synthesis.speak(utterance);
+        } else {
+          alert("Speech synthesis is not supported in your browser.");
+        }
+      }
     </script>
-    
   </body>
 </html>

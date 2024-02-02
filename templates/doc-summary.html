@@ -52,7 +52,10 @@
             <div id="drop-area">
               <p>Drag and drop file here</p>
               <p>Limit 200MB per file - PDF</p>
-              <button class="browse-btn" onclick="document.getElementById('fileInput').click()">
+              <button
+                class="browse-btn"
+                onclick="document.getElementById('fileInput').click()"
+              >
                 Browse files
               </button>
               <input
@@ -67,6 +70,9 @@
           <div id="result-container" style="display: none">
             <h3>Document Summary:</h3>
             <p id="docSummary"></p>
+            <button onclick="speakSummary()" class="speak-summary">
+              Read Summary
+            </button>
           </div>
         </div>
       </div>
@@ -113,6 +119,19 @@
 
         // Prevent the form from navigating away
         return false;
+      }
+
+      function speakSummary() {
+        const docSummary = document.getElementById("docSummary").textContent;
+
+        if ("speechSynthesis" in window) {
+          const synthesis = window.speechSynthesis;
+          const utterance = new SpeechSynthesisUtterance(docSummary);
+
+          synthesis.speak(utterance);
+        } else {
+          alert("Speech synthesis is not supported in your browser.");
+        }
       }
     </script>
   </body>
