@@ -41,13 +41,31 @@
     </div>
     <div class="main-content">
       <img src="../static/images/logo.svg" alt="Summarizer Image" />
-      <h1>Summarizer</h1>
+      <p id="type">Summarizer</p>
     </div>
+
     <script src="../static/script/script.js"></script>
     <script>
       function redirectPage(selectedValue) {
         window.location.href = selectedValue;
       }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const textElement = document.getElementById("type");
+        const text = textElement.innerHTML;
+        textElement.innerHTML = "";
+
+        let i = 0;
+        function type() {
+          if (i < text.length) {
+            textElement.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 250); // Adjust typing speed (milliseconds)
+          }
+        }
+
+        type();
+      });
     </script>
   </body>
 </html>
