@@ -3,12 +3,10 @@ from txtai.pipeline import Summary
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 from PyPDF2 import PdfReader
-from PyPDF2 import PdfFileReader  # Add this import
+from PyPDF2 import PdfFileReader
 import os
 import json
 import re
-import pyttsx3
-import time
 
 app = Flask(__name__)
 
