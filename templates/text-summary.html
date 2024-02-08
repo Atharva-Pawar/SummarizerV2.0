@@ -1,126 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summarization Text</title>
     <link rel="stylesheet" href="../static/styles/text-summary.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
     </style>
-
-    <!-- Include speak.js library from CDN -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/speak-tts@0.3.0/dist/speakWorker.js"></script> -->
-  </head>
-
-  <body>
+</head>
+<body>
     <div class="main-container">
-      <input type="checkbox" id="check" />
-      <div class="btn-one">
-        <label for="check">
-          <i class="fa fa-bars"></i>
-        </label>
-      </div>
-      <div class="btn-two">
-        <label for="check">
-          <i class="fa fa-times"></i>
-        </label>
-      </div>
-      <div class="side-bar">
-        <div class="msg">Select your choice</div>
-        <div class="dropdown">
-          <select class="dropdown-list" onchange="redirectPage(this.value);">
-            <option value="">Select your choice</option>
-            <option value="/summarize_text">Summarize Text</option>
-            <option value="/summarize_document">Summarize Document</option>
-            <option value="/summarize_youtube">Summarize YouTube Video</option>
-          </select>
+        <input type="checkbox" id="check" />
+        <div class="btn-one">
+            <label for="check">
+                <i class="fa fa-bars"></i>
+            </label>
         </div>
-      </div>
+        <div class="btn-two">
+            <label for="check">
+                <i class="fa fa-times"></i>
+            </label>
+        </div>
+        <div class="side-bar">
+            <div class="msg">Select your choice</div>
+            <div class="dropdown">
+                <select class="dropdown-list" onchange="redirectPage(this.value);">
+                    <option value="">Select your choice</option>
+                    <option value="/summarize_text">Summarize Text</option>
+                    <option value="/summarize_document">Summarize Document</option>
+                    <option value="/summarize_youtube">Summarize YouTube Video</option>
+                </select>
+            </div>
+        </div>
     </div>
     <h1>Summarization Text</h1>
     <div class="text-input">
-      <label for="inputTextarea">Enter your text here:</label>
-      <form
-        method="post"
-        action="/summarize_text"
-        onsubmit="return submitForm()"
-      >
-        <textarea
-          name="input_text"
-          id="inputTextarea"
-          placeholder="Type here..."
-        ></textarea>
-        <button type="submit">Summarize Text</button>
-      </form>
+        <label for="inputTextarea">Enter your text here:</label>
+        <form method="post" action="/summarize_text" onsubmit="return submitForm()">
+            <textarea name="input_text" id="inputTextarea" placeholder="Type here..."></textarea>
+            <button type="submit">Summarize Text</button>
+        </form>
 
-      <div id="result-container">
-        <h3>Summarized Text:</h3>
-        <p id="processedText">No result available yet.</p>
-        <!-- Add a button to trigger text-to-speech -->
-        <button onclick="speakResult()">Speak Summary</button>
-      </div>
+        <div id="result-container">
+            <h3>Summarized Text:</h3>
+            <p id="processedText">No result available yet.</p>
+            <!-- Add a button to trigger text-to-speech -->
+            <button onclick="speakResult()">Speak Summary</button>
+        </div>
     </div>
 
+    <!-- Loading spinner -->
+<div id="loading" style="display: none;">
+  <img src="../static/images/Rolling-1s-200px.svg" alt="Loading..." style="width: 100px; height: 100px;" />
+</div>
+
+
     <script>
-      function redirectPage(selectedValue) {
-        window.location.href = selectedValue;
-      }
+        function redirectPage(selectedValue) {
+            window.location.href = selectedValue;
+        }
 
-      function submitForm() {
-        const form = document.querySelector("form");
-        const formData = new FormData(form);
+        function submitForm() {
+            const form = document.querySelector("form");
+            const formData = new FormData(form);
 
-        fetch(form.action, {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            const processedText = data.result || "";
+            // Show loading spinner
+            document.getElementById("loading").style.display = "block";
+
+            // Blur the main content
+            document.querySelector(".text-input").classList.add("blur");
+
+            fetch(form.action, {
+                method: "POST",
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    const processedText = data.result || "";
+                    const resultContainer = document.getElementById("processedText");
+
+                    if (resultContainer) {
+                        resultContainer.innerHTML = processedText;
+                    } else {
+                        console.error("Error: 'processedText' not found in the HTML");
+                    }
+
+                    // Hide loading spinner
+                    document.getElementById("loading").style.display = "none";
+
+                    // Remove blur from the main content
+                    document.querySelector(".text-input").classList.remove("blur");
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    // Hide loading spinner
+                    document.getElementById("loading").style.display = "none";
+
+                    // Remove blur from the main content
+                    document.querySelector(".text-input").classList.remove("blur");
+                });
+
+            // Prevent the form from navigating away
+            return false;
+        }
+
+        function speakResult() {
             const resultContainer = document.getElementById("processedText");
 
             if (resultContainer) {
-              resultContainer.innerHTML = processedText;
+                const processedText = resultContainer.innerText;
+
+                if (processedText) {
+                    try {
+                        const utterance = new SpeechSynthesisUtterance(processedText);
+
+                        // Adjust voice speed (if applicable)
+                        utterance.rate = 1.5; // Adjust as needed
+
+                        // Speak the result using the Web Speech API
+                        speechSynthesis.speak(utterance);
+                    } catch (error) {
+                        console.error("Error in speakResult:", error);
+                    }
+                } else {
+                    console.error("Error: No processed text to speak");
+                }
             } else {
-              console.error("Error: 'processedText' not found in the HTML");
+                console.error("Error: 'processedText' not found in the HTML");
             }
-          })
-          .catch((error) => console.error("Error:", error));
-
-        // Prevent the form from navigating away
-        return false;
-      }
-
-      function speakResult() {
-        const resultContainer = document.getElementById("processedText");
-
-        if (resultContainer) {
-          const processedText = resultContainer.innerText;
-
-          if (processedText) {
-            try {
-              const utterance = new SpeechSynthesisUtterance(processedText);
-
-              // Adjust voice speed (if applicable)
-              utterance.rate = 1.5; // Adjust as needed
-
-              // Speak the result using the Web Speech API
-              speechSynthesis.speak(utterance);
-            } catch (error) {
-              console.error("Error in speakResult:", error);
-            }
-          } else {
-            console.error("Error: No processed text to speak");
-          }
-        } else {
-          console.error("Error: 'processedText' not found in the HTML");
         }
-      }
     </script>
-  </body>
+</body>
 </html>

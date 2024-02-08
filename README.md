@@ -29,6 +29,7 @@ Explore the power of summarization with Summarizer! Check out the repository her
 
 ```bash
 cd SummarizerV2.0/
+sudo apt install python3.10-venv # For linux
 python3 -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ```
@@ -36,7 +37,7 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 -**Install Dependencies:**
 
 ```bash
-pip install -r requirements.txt
+pip install flask txtai pyPDF2 pytube youtube_transcript_api
 ```
 
 -**Run the Application:**
