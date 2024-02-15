@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: whitesmoke;
   background-color: rgb(14, 17, 23);
 }
@@ -53,26 +53,31 @@ button:hover {
   background-color: rgb(29, 38, 57);
 }
 
-#output {
-  margin-top: 20px;
-  border: 1px solid rgb(29, 38, 57);
+.result-border {
+  border: 3px solid rgb(29, 38, 57);
   outline: none;
   padding: 10px;
   border-radius: 10px;
-  display: none;
 }
 
-@media screen and (max-width: 600px) {
-  textarea {
-    height: 150px;
-  }
-  .text-input {
-    max-width: 85%;
-    margin: 0 auto;
-  }
-  h1{
-    margin-top: 25%;
-  }
+#processedTextContainer {
+  margin-bottom: 20px; 
+}
+
+#loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#loading img {
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+}
+
+.blur {
+  filter: blur(5px); /* Adjust blur intensity as needed */
 }
 
 .main-container {
@@ -123,15 +128,15 @@ button:hover {
   font-size: 24px;
 }
 
-#check:checked~.side-bar {
+#check:checked ~ .side-bar {
   left: 0px;
 }
 
-#check:checked~.btn-one i {
+#check:checked ~ .btn-one i {
   opacity: 0;
 }
 
-#check:checked~.btn-two i {
+#check:checked ~ .btn-two i {
   opacity: 1;
 }
 
@@ -168,20 +173,4 @@ button:hover {
 
 .dropdown .dropdown-list option:hover {
   background-color: rgb(38, 39, 48);
-}
-
-#loading {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#loading img {
-  width: 50px; /* Adjust size as needed */
-  height: 50px; /* Adjust size as needed */
-}
-/* Define a CSS class for blurring the main content */
-.blur {
-  filter: blur(5px); /* Adjust blur intensity as needed */
 }

@@ -166,6 +166,21 @@ input[type="submit"]:hover {
   background-color: rgb(29, 38, 57);
 }
 
+.summary-content {
+  /* Initial border style */
+  border: none;
+  padding: 10px;
+}
+
+/* Class to show border */
+.result-border {
+  border: 3px solid rgb(29, 38, 57);
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
 @media only screen and (max-width: 600px) {
   .container {
     max-width: 85%;
