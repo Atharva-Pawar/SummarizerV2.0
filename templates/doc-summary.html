@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Summarize Documents</title>
+    <title>Summarize Document</title>
     <link rel="stylesheet" href="../static/styles/doc-summary.css" />
     <link
       rel="stylesheet"
@@ -50,7 +50,6 @@
           onsubmit="return submitForm()"
         >
           <div id="drop-area">
-            <!-- Removed the centered-container class -->
             <p>Drag and drop file here</p>
             <p>Limit 200MB per file - PDF</p>
             <button
@@ -68,10 +67,10 @@
           </div>
           <button class="summarize-btn" type="submit">Summarize</button>
         </form>
-        <div id="result-container">
+        <div id="result-container" style="display: none">
           <h3>Document Summary:</h3>
-          <p id="docSummary"></p>
-          <button onclick="speakSummary()" class="summary-button">
+          <div id="docSummary"></div>
+          <button onclick="speakSummary()" class="speak-summary">
             Read Summary
           </button>
         </div>
@@ -103,7 +102,6 @@
 
               if (docSummaryContainer) {
                 docSummaryContainer.innerHTML = docSummary;
-                docSummaryContainer.classList.remove("result-border");
               } else {
                 console.error("Error: Container not found in the HTML");
               }
