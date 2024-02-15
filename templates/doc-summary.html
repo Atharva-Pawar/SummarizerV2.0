@@ -13,7 +13,6 @@
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
     </style>
   </head>
-
   <body>
     <div class="main-container">
       <input type="checkbox" id="check" />
@@ -38,42 +37,43 @@
           </select>
         </div>
       </div>
+    </div>
 
-      <div class="centered-container">
-        <div>
-          <h2>Summarize Document</h2>
-          <p class="Upload">Upload your document here:</p>
-          <form
-            method="post"
-            action="/summarize_document"
-            enctype="multipart/form-data"
-            onsubmit="return submitForm()"
-          >
-            <div id="drop-area">
-              <p>Drag and drop file here</p>
-              <p>Limit 200MB per file - PDF</p>
-              <button
-                class="browse-btn"
-                onclick="document.getElementById('fileInput').click()"
-              >
-                Browse files
-              </button>
-              <input
-                type="file"
-                name="input_file"
-                id="fileInput"
-                style="display: none"
-              />
-            </div>
-            <button class="summarize-btn" type="submit">Summarize</button>
-          </form>
-          <div id="result-container" style="display: none">
-            <h3>Document Summary:</h3>
-            <p id="docSummary"></p>
-            <button onclick="speakSummary()" class="speak-summary">
-              Read Summary
+    <div class="centered-container">
+      <div class="text-container">
+        <h2>Summarize Document</h2>
+        <p class="Upload">Upload your document here:</p>
+        <form
+          method="post"
+          action="/summarize_document"
+          enctype="multipart/form-data"
+          onsubmit="return submitForm()"
+        >
+          <div id="drop-area">
+            <!-- Removed the centered-container class -->
+            <p>Drag and drop file here</p>
+            <p>Limit 200MB per file - PDF</p>
+            <button
+              class="browse-btn"
+              onclick="document.getElementById('fileInput').click()"
+            >
+              Browse files
             </button>
+            <input
+              type="file"
+              name="input_file"
+              id="fileInput"
+              style="display: none"
+            />
           </div>
+          <button class="summarize-btn" type="submit">Summarize</button>
+        </form>
+        <div id="result-container">
+          <h3>Document Summary:</h3>
+          <p id="docSummary"></p>
+          <button onclick="speakSummary()" class="summary-button">
+            Read Summary
+          </button>
         </div>
       </div>
     </div>
@@ -97,14 +97,13 @@
             const resultContainer = document.getElementById("result-container");
 
             if (resultContainer) {
-              // Show the result container
               resultContainer.style.display = "block";
 
-              // Update the content
               const docSummaryContainer = document.getElementById("docSummary");
 
               if (docSummaryContainer) {
                 docSummaryContainer.innerHTML = docSummary;
+                docSummaryContainer.classList.remove("result-border");
               } else {
                 console.error("Error: Container not found in the HTML");
               }
@@ -117,7 +116,6 @@
             alert(`Error: ${error.message}`);
           });
 
-        // Prevent the form from navigating away
         return false;
       }
 
