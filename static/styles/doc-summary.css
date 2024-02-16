@@ -163,60 +163,26 @@ h2 {
   background-color: rgb(38, 39, 48);
 }
 
-/* Responsive Styles */
-@media only screen and (max-width: 768px) {
-  .text-container {
-    padding: 0 20px;
-    max-width: none; /* Remove max-width for responsiveness */
-  }
+.bordered-summary {
+  border: 3px solid rgb(29, 38, 57);
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+}
 
-  .Upload {
-    text-align: center;
-  }
+/* Loader Styles */
+#loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  .side-bar {
-    width: 80%; /* Adjust sidebar width to take up 80% of the screen */
-    max-width: 300px; /* Limit maximum width */
-    left: -80%; /* Hide sidebar by default */
-    z-index: 1000; /* Increase z-index to appear on top of other elements */
-  }
+#loading img {
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+}
 
-  .close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1001; /* Ensure the close button is above the sidebar */
-  }
-
-  #check:checked ~ .side-bar {
-    left: 0; /* Show sidebar when checkbox is checked */
-    top: 0px;
-  }
-
-  #check:checked ~ .btn-one i {
-    opacity: 0;
-  }
-
-  #check:checked ~ .btn-two i {
-    opacity: 1;
-  }
-
-  .btn-one i,
-  .btn-two i {
-    display: inline-block; /* Ensure buttons are displayed on mobile */
-    position: absolute; /* Position buttons absolutely */
-    top: 20px; /* Adjust top position */
-    z-index: 1001; /* Ensure buttons are above the sidebar */
-  }
-
-  .btn-one i {
-    left: 20px; /* Position first button to the left */
-  }
-
-  .btn-two i {
-    right: 20px; /* Position second button to the right */
-  }
+.blur {
+  filter: blur(5px); /* Adjust blur intensity as needed */
 }
