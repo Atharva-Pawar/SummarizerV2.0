@@ -174,3 +174,15 @@ button:hover {
 .dropdown .dropdown-list option:hover {
   background-color: rgb(38, 39, 48);
 }
+
+.speak-summary {
+  background-color: rgb(38, 39, 48);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
