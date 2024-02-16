@@ -15,18 +15,18 @@
   </head>
   <body>
     <div class="main-container">
-      <input type="checkbox" id="check" />
+      <input type="checkbox" id="check" aria-label="Toggle sidebar" />
       <div class="btn-one">
-        <label for="check">
+        <label for="check" aria-hidden="true">
           <i class="fa fa-bars"></i>
         </label>
       </div>
       <div class="btn-two">
-        <label for="check">
+        <label for="check" aria-hidden="true">
           <i class="fa fa-times"></i>
         </label>
       </div>
-      <div class="side-bar">
+      <div class="side-bar" role="navigation" aria-labelledby="sidebar-label">
         <div class="msg">Select your choice</div>
         <div class="dropdown">
           <select class="dropdown-list" onchange="redirectPage(this.value);">
@@ -39,42 +39,50 @@
       </div>
     </div>
 
-    <div class="centered-container">
-      <div class="text-container">
-        <h2>Summarize Document</h2>
-        <p class="Upload">Upload your document here:</p>
-        <form
-          method="post"
-          action="/summarize_document"
-          enctype="multipart/form-data"
-          onsubmit="return submitForm()"
-        >
-          <div id="drop-area">
-            <p>Drag and drop file here</p>
-            <p>Limit 200MB per file - PDF</p>
-            <button
-              class="browse-btn"
-              onclick="document.getElementById('fileInput').click()"
-            >
-              Browse files
-            </button>
-            <input
-              type="file"
-              name="input_file"
-              id="fileInput"
-              style="display: none"
-            />
-          </div>
-          <button class="summarize-btn" type="submit">Summarize</button>
-        </form>
-        <div id="result-container" style="display: none">
-          <h3>Document Summary:</h3>
-          <div id="docSummary"></div>
-          <button onclick="speakSummary()" class="speak-summary">
-            Read Summary
+    <div class="text-container">
+      <h2>Summarize Document</h2>
+      <p class="Upload">Upload your document here:</p>
+      <form
+        method="post"
+        action="/summarize_document"
+        enctype="multipart/form-data"
+        onsubmit="return submitForm()"
+      >
+        <div id="drop-area" role="button" aria-label="Upload file">
+          <p>Drag and drop file here</p>
+          <p>Limit 200MB per file - PDF</p>
+          <button
+            class="browse-btn"
+            type="button"
+            onclick="document.getElementById('fileInput').click()"
+          >
+            Browse files
           </button>
+          <input
+            type="file"
+            name="input_file"
+            id="fileInput"
+            style="display: none"
+          />
         </div>
+        <button class="summarize-btn" type="submit">Summarize</button>
+      </form>
+      <div id="result-container" style="display: none">
+        <h3>Document Summary:</h3>
+        <div id="docSummary"></div>
+        <button onclick="speakSummary()" class="speak-summary">
+          Read Summary
+        </button>
       </div>
+    </div>
+
+    <!-- Loader Animation -->
+    <div id="loading" style="display: none">
+      <img
+        src="../static/images/Rolling-1s-200px.svg"
+        alt="Loading..."
+        style="width: 50px; height: 50px"
+      />
     </div>
 
     <script>
