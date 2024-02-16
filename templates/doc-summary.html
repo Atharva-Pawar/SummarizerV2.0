@@ -145,35 +145,31 @@
         return false;
       }
 
-      function speakResult() {
-        const resultContainer = document.getElementById(
-          "processedTextContainer"
-        );
+      function speakSummary(){
+  const resultContainer = document.getElementById("docSummary");
 
-        if (resultContainer) {
-          const processedText = resultContainer.innerText;
+  if (resultContainer) {
+    const processedText = resultContainer.innerText;
 
-          if (processedText) {
-            try {
-              const utterance = new SpeechSynthesisUtterance(processedText);
+    if (processedText) {
+      try {
+        const utterance = new SpeechSynthesisUtterance(processedText);
 
-              // Adjust voice speed (if applicable)
-              utterance.rate = 1.5; // Adjust as needed
+        // Adjust voice speed (if applicable)
+        utterance.rate = 1.5; // Adjust as needed
 
-              // Speak the result using the Web Speech API
-              speechSynthesis.speak(utterance);
-            } catch (error) {
-              console.error("Error in speakResult:", error);
-            }
-          } else {
-            console.error("Error: No processed text to speak");
-          }
-        } else {
-          console.error(
-            "Error: 'processedTextContainer' not found in the HTML"
-          );
-        }
+        // Speak the result using the Web Speech API
+        speechSynthesis.speak(utterance);
+      } catch (error) {
+        console.error("Error in speakResult:", error);
       }
+    } else {
+      console.error("Error: No processed text to speak");
+    }
+  } else {
+    console.error("Error: 'docSummary' not found in the HTML");
+  }
+}
     </script>
   </body>
 </html>
