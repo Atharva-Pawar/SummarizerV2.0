@@ -69,7 +69,7 @@
       </form>
       <div id="result-container" style="display: none">
         <h3>Document Summary:</h3>
-        <div id="docSummary"></div>
+        <div id="docSummary" class="bordered-summary"></div>
         <button onclick="speakSummary()" class="speak-summary">
           Read Summary
         </button>
@@ -94,47 +94,84 @@
         const form = document.querySelector("form");
         const formData = new FormData(form);
 
+        // Show loading spinner
+        document.getElementById("loading").style.display = "block";
+
+        // Add blur effect to the text-container
+        document.querySelector(".text-container").classList.add("blur");
+
         fetch(form.action, {
           method: "POST",
           body: formData,
         })
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
           .then((data) => {
             const docSummary = data.doc_summary || "";
             const resultContainer = document.getElementById("result-container");
-
             if (resultContainer) {
               resultContainer.style.display = "block";
-
               const docSummaryContainer = document.getElementById("docSummary");
-
               if (docSummaryContainer) {
-                docSummaryContainer.innerHTML = docSummary;
+                docSummaryContainer.textContent = docSummary;
               } else {
                 console.error("Error: Container not found in the HTML");
               }
             } else {
               console.error("Error: Result container not found in the HTML");
             }
+
+            // Hide loading spinner
+            document.getElementById("loading").style.display = "none";
+
+            // Remove blur effect from the text-container
+            document.querySelector(".text-container").classList.remove("blur");
           })
           .catch((error) => {
             console.error("Error:", error);
             alert(`Error: ${error.message}`);
+
+            // Hide loading spinner
+            document.getElementById("loading").style.display = "none";
+
+            // Remove blur effect from the text-container
+            document.querySelector(".text-container").classList.remove("blur");
           });
 
         return false;
       }
 
-      function speakSummary() {
-        const docSummary = document.getElementById("docSummary").textContent;
+      function speakResult() {
+        const resultContainer = document.getElementById(
+          "processedTextContainer"
+        );
 
-        if ("speechSynthesis" in window) {
-          const synthesis = window.speechSynthesis;
-          const utterance = new SpeechSynthesisUtterance(docSummary);
+        if (resultContainer) {
+          const processedText = resultContainer.innerText;
 
-          synthesis.speak(utterance);
+          if (processedText) {
+            try {
+              const utterance = new SpeechSynthesisUtterance(processedText);
+
+              // Adjust voice speed (if applicable)
+              utterance.rate = 1.5; // Adjust as needed
+
+              // Speak the result using the Web Speech API
+              speechSynthesis.speak(utterance);
+            } catch (error) {
+              console.error("Error in speakResult:", error);
+            }
+          } else {
+            console.error("Error: No processed text to speak");
+          }
         } else {
-          alert("Speech synthesis is not supported in your browser.");
+          console.error(
+            "Error: 'processedTextContainer' not found in the HTML"
+          );
         }
       }
     </script>
