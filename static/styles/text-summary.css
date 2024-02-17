@@ -24,7 +24,7 @@ label {
 }
 
 textarea {
-  width: 100%;
+  width: 95%;
   height: 100px;
   resize: none;
   box-sizing: border-box;
@@ -61,7 +61,7 @@ button:hover {
 }
 
 #processedTextContainer {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 #loading {
@@ -185,4 +185,29 @@ button:hover {
   font-size: 16px;
   border-radius: 10px;
   margin-top: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  label {
+    margin-left: 20px;
+  }
+
+  #inputTextarea {
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 170px;
+  }
+
+  button {
+    margin-left: 20px;
+  }
+
+  h3 {
+    margin-left: 20px;
+  }
+
+  #processedTextContainer {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
