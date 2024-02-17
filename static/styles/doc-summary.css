@@ -186,3 +186,34 @@ h2 {
 .blur {
   filter: blur(5px); /* Adjust blur intensity as needed */
 }
+
+@media only screen and (max-width: 768px) {
+  .side-bar {
+    left: -300px;
+  }
+
+  #check:checked ~ .side-bar {
+    left: 0;
+  }
+  #drop-area {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+  .Upload {
+    margin-left: 20px;
+  }
+  .summarize-btn {
+    margin-left: 20px;
+  }
+  h3 {
+    margin-left: 20px;
+  }
+  .bordered-summary {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .speak-summary {
+    margin-left: 20px;
+  }
+}

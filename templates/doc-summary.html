@@ -145,10 +145,8 @@
         return false;
       }
 
-      function speakResult() {
-        const resultContainer = document.getElementById(
-          "processedTextContainer"
-        );
+      function speakSummary() {
+        const resultContainer = document.getElementById("docSummary");
 
         if (resultContainer) {
           const processedText = resultContainer.innerText;
@@ -169,9 +167,7 @@
             console.error("Error: No processed text to speak");
           }
         } else {
-          console.error(
-            "Error: 'processedTextContainer' not found in the HTML"
-          );
+          console.error("Error: 'docSummary' not found in the HTML");
         }
       }
     </script>

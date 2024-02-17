@@ -195,6 +195,9 @@ input[type="submit"]:hover {
   input[type="url"] {
     font-size: 14px;
   }
+  h3 {
+    margin-top: 15px;
+  }
 }
 #loading {
   position: fixed;
