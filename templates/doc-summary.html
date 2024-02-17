@@ -145,14 +145,33 @@
         return false;
       }
 
-      function speakSummary() {
-        const docSummary = document.getElementById("docSummary").textContent;
-        if ("speechSynthesis" in window) {
-          const synthesis = window.speechSynthesis;
-          const utterance = new SpeechSynthesisUtterance(docSummary);
-          synthesis.speak(utterance);
+      function speakResult() {
+        const resultContainer = document.getElementById(
+          "processedTextContainer"
+        );
+
+        if (resultContainer) {
+          const processedText = resultContainer.innerText;
+
+          if (processedText) {
+            try {
+              const utterance = new SpeechSynthesisUtterance(processedText);
+
+              // Adjust voice speed (if applicable)
+              utterance.rate = 1.5; // Adjust as needed
+
+              // Speak the result using the Web Speech API
+              speechSynthesis.speak(utterance);
+            } catch (error) {
+              console.error("Error in speakResult:", error);
+            }
+          } else {
+            console.error("Error: No processed text to speak");
+          }
         } else {
-          alert("Speech synthesis is not supported in your browser.");
+          console.error(
+            "Error: 'processedTextContainer' not found in the HTML"
+          );
         }
       }
     </script>

@@ -31,7 +31,7 @@ h2 {
   padding: 20px;
   color: whitesmoke;
   background-color: rgb(38, 39, 48);
-  border-radius: 4%;
+  border-radius: 16px;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -61,7 +61,7 @@ h2 {
   display: block;
   font-size: 16px;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-top: 15px;
 }
 
 .summarize-btn:hover,
@@ -102,8 +102,8 @@ h2 {
 
 .btn-two i {
   font-size: 20px;
-  line-height: 60px;
-  position: absolute;
+  line-height: 1px;
+  position: fixed;
   left: 260px;
   cursor: pointer;
   opacity: 0;
