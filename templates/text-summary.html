@@ -1,214 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Summarize Text</title>
-    <link rel="stylesheet" href="../static/styles/text-summary.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
-    </style>
-  </head>
-  <body>
-    <div class="main-container">
-      <input type="checkbox" id="check" />
-      <div class="btn-one">
-        <label for="check">
-          <i class="fa fa-bars"></i>
-        </label>
-      </div>
-      <div class="btn-two">
-        <label for="check">
-          <i class="fa fa-times"></i>
-        </label>
-      </div>
-      <div class="side-bar">
-        <div class="msg">Select your choice</div>
-        <div class="dropdown">
-          <select class="dropdown-list" onchange="redirectPage(this.value);">
-            <option value="">Select your choice</option>
-            <option value="/summarize_text">Summarize Text</option>
-            <option value="/summarize_document">Summarize Document</option>
-            <option value="/summarize_youtube">Summarize YouTube Video</option>
-          </select>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summarize Text</title>
+  <link rel="stylesheet" href="../static/styles/text-summary.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar toggle buttons -->
+    <input type="checkbox" id="check" />
+    <div class="btn-one">
+      <label for="check">
+        <i class="fa fa-bars"></i>
+      </label>
+    </div>
+    <div class="btn-two">
+      <label for="check">
+        <i class="fa fa-times"></i>
+      </label>
+    </div>
+    <!-- Sidebar -->
+    <div class="side-bar">
+      <div class="msg">Select your choice</div>
+      <div class="dropdown">
+        <!-- Dropdown to select different types of summaries -->
+        <select class="dropdown-list" onchange="redirectPage(this.value);">
+          <option value="">Select your choice</option>
+          <option value="/summarize_text">Summarize Text</option>
+          <option value="/summarize_document">Summarize Document</option>
+          <option value="/summarize_youtube">Summarize YouTube Video</option>
+        </select>
       </div>
     </div>
-    <h1>Summarize Text</h1>
-    <div class="text-input">
-      <label for="inputTextarea">Enter your text here:</label>
-      <form
-        method="post"
-        action="/summarize_text"
-        onsubmit="return submitForm()"
-      >
-        <textarea
-          name="input_text"
-          id="inputTextarea"
-          placeholder="Type here..."
-        ></textarea>
-        <button type="submit">Summarize Text</button>
-      </form>
-
-      <div id="result-container">
-        <h3>Summarized Text:</h3>
-        <div id="processedTextContainer">No summary available yet.</div>
-        <div>
-          <button onclick="speakResult()" class="speak-summary">
-            Speak Summary
-          </button>
-          <button
-            onclick="translateSummary()"
-            class="translate-summary"
-            style="display: none"
-          >
-            Translate Summary
-          </button>
-        </div>
+  </div>
+  <!-- Summarize Text Section -->
+  <h1>Summarize Text</h1>
+  <div class="text-input">
+    <!-- Text input form -->
+    <label for="inputTextarea">Enter your text here:</label>
+    <form method="post" action="/summarize_text" onsubmit="return submitForm()">
+      <textarea name="input_text" id="inputTextarea" placeholder="Type here..."></textarea>
+      <button type="submit">Summarize Text</button>
+    </form>
+    <!-- Container for summarized text -->
+    <div id="result-container">
+      <h3>Summarized Text:</h3>
+      <div id="processedTextContainer">No summary available yet.</div>
+      <div>
+        <!-- Button to speak the summarized text -->
+        <button onclick="speakResult()" class="speak-summary">Speak Summary</button>
+        <!-- Button to translate the summarized text -->
+        <button onclick="translateSummary()" class="translate-summary" style="display: none">Translate Summary</button>
       </div>
     </div>
+  </div>
 
-    <!-- Loading spinner -->
-    <div id="loading" style="display: none">
-      <img
-        src="../static/images/Rolling-1s-200px.svg"
-        alt="Loading..."
-        style="width: 100px; height: 100px"
-      />
-    </div>
+  <!-- Loading spinner -->
+  <div id="loading" style="display: none">
+    <img src="../static/images/Rolling-1s-200px.svg" alt="Loading..." style="width: 100px; height: 100px" />
+  </div>
 
-    <script>
-      function redirectPage(selectedValue) {
-        window.location.href = selectedValue;
-      }
+  <script>
+    // Function to redirect to selected page
+    function redirectPage(selectedValue) {
+      window.location.href = selectedValue;
+    }
 
-      function submitForm() {
-        const form = document.querySelector("form");
-        const formData = new FormData(form);
+    // Function to handle form submission
+    function submitForm() {
+      const form = document.querySelector("form");
+      const formData = new FormData(form);
 
-        // Show loading spinner
-        document.getElementById("loading").style.display = "block";
+      // Show loading spinner
+      document.getElementById("loading").style.display = "block";
 
-        // Blur the main content
-        document.querySelector(".text-input").classList.add("blur");
+      // Blur the main content
+      document.querySelector(".text-input").classList.add("blur");
 
-        fetch(form.action, {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            const processedText = data.result || "";
-            const processedTextContainer = document.getElementById(
-              "processedTextContainer"
-            );
+      // Fetch and process the text summary
+      fetch(form.action, {
+        method: "POST",
+        body: formData,
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        const processedText = data.result || "";
+        const processedTextContainer = document.getElementById("processedTextContainer");
 
-            if (processedTextContainer) {
-              processedTextContainer.innerHTML = processedText;
+        if (processedTextContainer) {
+          // Display the processed text summary
+          processedTextContainer.innerHTML = processedText;
 
-              // Add border to the result container
-              processedTextContainer.classList.add("result-border");
+          // Add border to the result container
+          processedTextContainer.classList.add("result-border");
 
-              // Show translate summary button
-              showTranslateButton();
-            } else {
-              console.error(
-                "Error: 'processedTextContainer' not found in the HTML"
-              );
-            }
-
-            // Hide loading spinner
-            document.getElementById("loading").style.display = "none";
-
-            // Remove blur from the main content
-            document.querySelector(".text-input").classList.remove("blur");
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            // Hide loading spinner
-            document.getElementById("loading").style.display = "none";
-
-            // Remove blur from the main content
-            document.querySelector(".text-input").classList.remove("blur");
-          });
-
-        // Prevent the form from navigating away
-        return false;
-      }
-
-      function showTranslateButton() {
-        const translateButton = document.querySelector(".translate-summary");
-        if (translateButton) {
-          translateButton.style.display = "block";
-        }
-      }
-
-      function translateSummary() {
-        const resultContainer = document.getElementById(
-          "processedTextContainer"
-        );
-
-        if (resultContainer) {
-          const processedText = resultContainer.innerText;
-
-          const targetLanguage = "mr";
-
-          // Make API call to translate summary text
-          fetch(
-            `/translate?text=${processedText}&target_language=${targetLanguage}`
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.result) {
-                // Update the processedTextContainer with the translated text
-                resultContainer.innerText = data.result;
-              } else {
-                console.error("Error: Failed to translate summary");
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
+          // Show translate summary button
+          showTranslateButton();
         } else {
-          console.error(
-            "Error: 'processedTextContainer' not found in the HTML"
-          );
+          console.error("Error: 'processedTextContainer' not found in the HTML");
         }
+
+        // Hide loading spinner
+        document.getElementById("loading").style.display = "none";
+
+        // Remove blur from the main content
+        document.querySelector(".text-input").classList.remove("blur");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Hide loading spinner
+        document.getElementById("loading").style.display = "none";
+
+        // Remove blur from the main content
+        document.querySelector(".text-input").classList.remove("blur");
+      });
+
+      // Prevent the form from navigating away
+      return false;
+    }
+
+    // Function to show translate summary button
+    function showTranslateButton() {
+      const translateButton = document.querySelector(".translate-summary");
+      if (translateButton) {
+        translateButton.style.display = "block";
       }
+    }
 
-      function speakResult() {
-        const resultContainer = document.getElementById(
-          "processedTextContainer"
-        );
+    // Function to translate the summarized text
+    function translateSummary() {
+      const resultContainer = document.getElementById("processedTextContainer");
 
-        if (resultContainer) {
-          const processedText = resultContainer.innerText;
+      if (resultContainer) {
+        const processedText = resultContainer.innerText;
 
-          if (processedText) {
-            try {
-              const utterance = new SpeechSynthesisUtterance(processedText);
+        const targetLanguage = "mr"; // Change to your desired target language
 
-              // Adjust voice speed (if applicable)
-              utterance.rate = 1.5; // Adjust as needed
-
-              // Speak the result using the Web Speech API
-              speechSynthesis.speak(utterance);
-            } catch (error) {
-              console.error("Error in speakResult:", error);
-            }
+        // Make API call to translate summary text
+        fetch(`/translate`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text: processedText,
+            target_language: targetLanguage,
+          }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            // Update the processedTextContainer with the translated text
+            resultContainer.innerText = data.result;
           } else {
-            console.error("Error: No processed text to speak");
+            console.error("Error: Failed to translate summary");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      } else {
+        console.error("Error: 'processedTextContainer' not found in the HTML");
+      }
+    }
+
+    // Function to speak the summarized text
+    function speakResult() {
+      const resultContainer = document.getElementById("processedTextContainer");
+
+      if (resultContainer) {
+        const processedText = resultContainer.innerText;
+
+        if (processedText) {
+          try {
+            const utterance = new SpeechSynthesisUtterance(processedText);
+
+            // Adjust voice speed (if applicable)
+            utterance.rate = 1.5; // Adjust as needed
+
+            // Speak the result using the Web Speech API
+            speechSynthesis.speak(utterance);
+          } catch (error) {
+            console.error("Error in speakResult:", error);
           }
         } else {
-          console.error(
-            "Error: 'processedTextContainer' not found in the HTML"
-          );
+          console.error("Error: No processed text to speak");
         }
+      } else {
+        console.error("Error: 'processedTextContainer' not found in the HTML");
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>

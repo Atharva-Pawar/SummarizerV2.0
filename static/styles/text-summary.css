@@ -1,3 +1,4 @@
+/* Reset default margin, padding, font family, text color, and background color */
 body {
   margin: 0;
   padding: 0;
@@ -6,23 +7,27 @@ body {
   background-color: rgb(14, 17, 23);
 }
 
+/* Heading 1 styling */
 h1 {
   text-align: center;
   color: whitesmoke;
   margin-top: 5%;
 }
 
+/* Container for text input */
 .text-input {
   max-width: 600px;
   margin: 0 auto;
 }
 
+/* Label styling */
 label {
   display: block;
   margin-bottom: 5px;
   color: whitesmoke;
 }
 
+/* Textarea styling */
 textarea {
   width: 95%;
   height: 100px;
@@ -38,6 +43,7 @@ textarea {
   border-radius: 10px;
 }
 
+/* Button styling */
 button {
   background-color: rgb(38, 39, 48);
   color: white;
@@ -49,10 +55,12 @@ button {
   border-radius: 10px;
 }
 
+/* Hover effect for button */
 button:hover {
   background-color: rgb(29, 38, 57);
 }
 
+/* Border styling for result container */
 .result-border {
   border: 3px solid rgb(29, 38, 57);
   outline: none;
@@ -60,10 +68,12 @@ button:hover {
   border-radius: 10px;
 }
 
+/* Margin for result container */
 #processedTextContainer {
   margin-bottom: 20px;
 }
 
+/* Loading spinner positioning */
 #loading {
   position: fixed;
   top: 50%;
@@ -71,19 +81,23 @@ button:hover {
   transform: translate(-50%, -50%);
 }
 
+/* Loading spinner image size */
 #loading img {
   width: 50px; /* Adjust size as needed */
   height: 50px; /* Adjust size as needed */
 }
 
+/* CSS class for blurring the main content */
 .blur {
   filter: blur(5px); /* Adjust blur intensity as needed */
 }
 
+/* Main container styling */
 .main-container {
   display: flex;
 }
 
+/* Sidebar styling */
 .main-container .side-bar {
   position: fixed;
   height: 100vh;
@@ -93,14 +107,17 @@ button:hover {
   transition: left 0.3s ease;
 }
 
+/* Hide checkbox input */
 #check {
   display: none;
 }
 
+/* Font Awesome icon styling */
 .fa {
   color: whitesmoke;
 }
 
+/* Toggle button styling */
 .main-container .btn-one i {
   color: whitesmoke;
   font-size: 20px;
@@ -124,10 +141,12 @@ button:hover {
   z-index: 1;
 }
 
+/* Hover effect for toggle button */
 .btn-one i:hover {
   font-size: 24px;
 }
 
+/* Sidebar animation when checkbox is checked */
 #check:checked ~ .side-bar {
   left: 0px;
 }
@@ -140,11 +159,13 @@ button:hover {
   opacity: 1;
 }
 
+/* Message styling */
 .msg {
   color: whitesmoke;
   margin: 120px 0px 6px 26px;
 }
 
+/* Dropdown styling */
 .dropdown {
   display: flex;
   justify-content: center;
@@ -175,6 +196,7 @@ button:hover {
   background-color: rgb(38, 39, 48);
 }
 
+/* Speak and Translate summary button styling */
 .speak-summary,
 .translate-summary {
   background-color: rgb(38, 39, 48);
@@ -188,29 +210,25 @@ button:hover {
   margin-top: 15px;
 }
 
+/* Media query for smaller screens */
 @media only screen and (max-width: 768px) {
-
-  h1{
+  h1 {
     margin-top: 15%;
   }
   label {
     margin-left: 20px;
   }
-
   #inputTextarea {
     margin-left: 10px;
     margin-right: 10px;
     height: 170px;
   }
-
   button {
     margin-left: 20px;
   }
-
   h3 {
     margin-left: 20px;
   }
-
   #processedTextContainer {
     margin-left: 10px;
     margin-right: 10px;
