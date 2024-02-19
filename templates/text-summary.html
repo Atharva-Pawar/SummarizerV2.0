@@ -57,7 +57,18 @@
       <div id="result-container">
         <h3>Summarized Text:</h3>
         <div id="processedTextContainer">No summary available yet.</div>
-        <button onclick="speakResult()" class="speak-summary">Speak Summary</button>
+        <div>
+          <button onclick="speakResult()" class="speak-summary">
+            Speak Summary
+          </button>
+          <button
+            onclick="translateSummary()"
+            class="translate-summary"
+            style="display: none"
+          >
+            Translate Summary
+          </button>
+        </div>
       </div>
     </div>
 
@@ -101,6 +112,9 @@
 
               // Add border to the result container
               processedTextContainer.classList.add("result-border");
+
+              // Show translate summary button
+              showTranslateButton();
             } else {
               console.error(
                 "Error: 'processedTextContainer' not found in the HTML"
@@ -124,6 +138,46 @@
 
         // Prevent the form from navigating away
         return false;
+      }
+
+      function showTranslateButton() {
+        const translateButton = document.querySelector(".translate-summary");
+        if (translateButton) {
+          translateButton.style.display = "block";
+        }
+      }
+
+      function translateSummary() {
+        const resultContainer = document.getElementById(
+          "processedTextContainer"
+        );
+
+        if (resultContainer) {
+          const processedText = resultContainer.innerText;
+
+          const targetLanguage = "mr";
+
+          // Make API call to translate summary text
+          fetch(
+            `/translate?text=${processedText}&target_language=${targetLanguage}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.result) {
+                // Update the processedTextContainer with the translated text
+                resultContainer.innerText = data.result;
+              } else {
+                console.error("Error: Failed to translate summary");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        } else {
+          console.error(
+            "Error: 'processedTextContainer' not found in the HTML"
+          );
+        }
       }
 
       function speakResult() {

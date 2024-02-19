@@ -3,7 +3,7 @@ from txtai.pipeline import Summary
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 from PyPDF2 import PdfReader
-from PyPDF2 import PdfFileReader
+from googletrans import Translator  # Import Translator from googletrans
 import os
 import json
 import re
@@ -61,6 +61,13 @@ def extract_transcript(video_url, language="en"):
     except Exception as e:
         return None
 
+
+def translate_text(text, target_language):
+    translator = Translator()
+    translation = translator.translate(text, dest=target_language)
+    return translation.text
+
+
 # Flask Routes
 
 
@@ -69,19 +76,18 @@ def index():
     return render_template('index.html')
 
 
-# Flask Routes
+# Flask Routes for text summarization
 @app.route('/summarize_text', methods=['GET', 'POST'])
 def summarize_text():
     if request.method == 'POST':
         input_text = request.form['input_text']
         result = text_summary(input_text)
-
         return jsonify({'result': result})
 
-    # Handle GET requests separately, possibly render a template or return a specific response
     return render_template('text-summary.html')
 
 
+# Flask Routes for document summarization
 @app.route('/summarize_document', methods=['GET', 'POST'])
 def summarize_document():
     if request.method == 'POST':
@@ -103,25 +109,20 @@ def summarize_document():
             return jsonify({'extracted_text': extracted_text, 'doc_summary': doc_summary})
 
         except Exception as e:
-            import traceback
-            traceback.print_exc()  # Print the full traceback to the console
             return jsonify({'error': str(e)}), 500
 
     return render_template('doc-summary.html')
 
 
+# Flask Routes for YouTube video summarization
 @app.route('/summarize_youtube', methods=['GET', 'POST'])
 def summarize_youtube():
     if request.method == 'POST':
         try:
-            # Get JSON data from the request
-            data = json.loads(request.data)
-
-            # Extract the required information from the JSON data
+            data = request.json
             video_url = data.get('video_url', '')
             language = data.get('language', 'en')
 
-            # Your existing code for processing YouTube videos
             video_path = download_youtube_video(video_url)
             transcript = extract_transcript(video_url, language)
 
@@ -131,10 +132,19 @@ def summarize_youtube():
             else:
                 return jsonify({'error': 'Failed to fetch transcript. Please check the video URL.'}), 400
 
-        except json.JSONDecodeError:
-            return jsonify({'error': 'Invalid JSON data'}), 400
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
 
     return render_template('yt-summary.html')
+
+
+# Translation route
+@app.route('/translate', methods=['GET'])
+def translate():
+    text = request.args.get('text', '')
+    target_language = request.args.get('target_language', 'mr')
+    translated_text = translate_text(text, target_language)
+    return jsonify({'result': translated_text})
 
 
 if __name__ == '__main__':

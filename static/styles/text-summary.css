@@ -175,7 +175,8 @@ button:hover {
   background-color: rgb(38, 39, 48);
 }
 
-.speak-summary {
+.speak-summary,
+.translate-summary {
   background-color: rgb(38, 39, 48);
   color: white;
   padding: 10px 15px;
@@ -213,5 +214,8 @@ button:hover {
   #processedTextContainer {
     margin-left: 10px;
     margin-right: 10px;
+  }
+  h1 {
+    margin-top: 10%;
   }
 }
