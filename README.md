@@ -37,7 +37,7 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 -**Install Dependencies:**
 
 ```bash
-pip install flask txtai pyPDF2 pytube youtube_transcript_api
+pip install -r requirements.txt
 ```
 
 -**Run the Application:**
