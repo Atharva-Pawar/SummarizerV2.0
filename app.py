@@ -1,22 +1,30 @@
+# Import necessary modules
 from flask import Flask, render_template, request, jsonify
 from txtai.pipeline import Summary
 from pytube import YouTube
-from youtube_transcript_api import YouTubeTranscriptApi
 from PyPDF2 import PdfReader
-from googletrans import Translator  # Import Translator from googletrans
+from youtube_transcript_api import YouTubeTranscriptApi
+from googletrans import Translator
 import os
-import json
 import re
 
+# Initialize Flask application
 app = Flask(__name__)
+
+# Initialize translator and text summarizer instances
+translator = Translator()
+summary = Summary()
 
 # Utility Functions
 
+# Function to generate summary of a given text
+
 
 def text_summary(text, maxlength=None):
-    summary = Summary()
     result = summary(text)
     return result
+
+# Function to extract text from a PDF file
 
 
 def extract_text_from_pdf(file_path):
@@ -30,17 +38,20 @@ def extract_text_from_pdf(file_path):
     except Exception as e:
         return None
 
+# Function to download a YouTube video
+
 
 def download_youtube_video(video_url):
     yt = YouTube(video_url)
     video_stream = yt.streams.filter(file_extension="mp4").first()
 
-    # Sanitize the title to remove invalid characters
     title = re.sub(r'[<>:"/\\|?*]', '', yt.title)
 
     video_path = os.path.join("static/videos", f"{title}.mp4")
     video_stream.download(output_path="static/videos", filename=title)
     return video_path
+
+# Function to extract transcript from a YouTube video
 
 
 def extract_transcript(video_url, language="en"):
@@ -61,33 +72,40 @@ def extract_transcript(video_url, language="en"):
     except Exception as e:
         return None
 
+# Function to translate text to a target language
+
 
 def translate_text(text, target_language):
-    translator = Translator()
+    if not text:
+        return ""  # Return empty string if text is empty
+
     translation = translator.translate(text, dest=target_language)
     return translation.text
 
-
 # Flask Routes
+
+# Route for the home page
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# Route for text summarization
 
-# Flask Routes for text summarization
+
 @app.route('/summarize_text', methods=['GET', 'POST'])
 def summarize_text():
     if request.method == 'POST':
         input_text = request.form['input_text']
         result = text_summary(input_text)
         return jsonify({'result': result})
+    elif request.method == 'GET':
+        return render_template('text-summary.html')
 
-    return render_template('text-summary.html')
+# Route for document summarization
 
 
-# Flask Routes for document summarization
 @app.route('/summarize_document', methods=['GET', 'POST'])
 def summarize_document():
     if request.method == 'POST':
@@ -113,8 +131,9 @@ def summarize_document():
 
     return render_template('doc-summary.html')
 
+# Route for YouTube video summarization
 
-# Flask Routes for YouTube video summarization
+
 @app.route('/summarize_youtube', methods=['GET', 'POST'])
 def summarize_youtube():
     if request.method == 'POST':
@@ -134,18 +153,30 @@ def summarize_youtube():
 
         except Exception as e:
             return jsonify({'error': str(e)}), 500
+    elif request.method == 'GET':
+        return render_template('yt-summary.html')
 
-    return render_template('yt-summary.html')
+# Route for text translation
 
 
-# Translation route
-@app.route('/translate', methods=['GET'])
+@app.route("/translate", methods=["GET", "POST"])
 def translate():
-    text = request.args.get('text', '')
-    target_language = request.args.get('target_language', 'mr')
-    translated_text = translate_text(text, target_language)
-    return jsonify({'result': translated_text})
+    if request.method == "POST":
+        data = request.get_json()
+        text = data.get("text")
+        target_language = data.get("target_language", "mr")
+
+        try:
+            # Translate the text to the target language
+            translated_text = translate_text(text, target_language)
+            return jsonify({"result": translated_text}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+    elif request.method == "GET":
+        # Handle GET request if needed
+        return jsonify({"error": "GET request not supported"}), 405
 
 
+# Run the Flask application
 if __name__ == '__main__':
     app.run(debug=True)

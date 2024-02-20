@@ -1,19 +1,23 @@
+/* Reset default margin, padding, and font family */
 * {
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
 }
 
+/* Set background color and text color for the entire document */
 html,
 body {
   background-color: rgb(14, 17, 23);
   color: whitesmoke;
 }
 
+/* Main container for the entire page */
 .main-container {
   position: relative;
 }
 
+/* Sidebar styling */
 .main-container .side-bar {
   position: fixed;
   height: 100vh;
@@ -24,14 +28,17 @@ body {
   top: 0px;
 }
 
+/* Hide checkbox input */
 #check {
   display: none;
 }
 
+/* Font Awesome icon styling */
 .fa {
   color: whitesmoke;
 }
 
+/* Toggle button styling */
 .main-container .btn-one i {
   color: whitesmoke;
   font-size: 20px;
@@ -55,10 +62,12 @@ body {
   z-index: 1;
 }
 
+/* Hover effect for toggle button */
 .btn-one i:hover {
   font-size: 24px;
 }
 
+/* Sidebar animation when checkbox is checked */
 #check:checked ~ .side-bar {
   left: 0px;
 }
@@ -71,11 +80,13 @@ body {
   opacity: 1;
 }
 
+/* Message styling */
 .msg {
   color: whitesmoke;
   margin: 120px 0px 6px 26px;
 }
 
+/* Dropdown styling */
 .dropdown {
   display: flex;
   justify-content: center;
@@ -106,27 +117,32 @@ body {
   background-color: rgb(38, 39, 48);
 }
 
+/* Container styling */
 .container {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
 }
 
+/* Heading styling */
 .heading {
   margin-top: 10%;
   font-size: 1.5em;
 }
 
+/* Field styling */
 .field1,
 .field2 {
   margin-bottom: 20px;
 }
 
+/* Label styling */
 label {
   display: block;
   margin-bottom: -5px;
 }
 
+/* Input field styling */
 input[type="url"] {
   width: 100%;
   padding: 10px;
@@ -138,6 +154,7 @@ input[type="url"] {
   color: whitesmoke;
 }
 
+/* Submit button styling */
 input[type="submit"] {
   padding: 10px 15px;
   background-color: rgb(38, 39, 48);
@@ -148,6 +165,7 @@ input[type="submit"] {
   font-size: 16px;
 }
 
+/* Summary button styling */
 .summary-button {
   padding: 10px 15px;
   background-color: rgb(38, 39, 48);
@@ -159,17 +177,19 @@ input[type="submit"] {
   margin-top: 15px;
 }
 
+/* Hover effect for submit button */
 input[type="submit"]:hover {
   background-color: rgb(29, 38, 57);
 }
 
+/* Hover effect for summary button */
 .summary-button:hover {
   background-color: rgb(29, 38, 57);
 }
 
+/* Styling for summarized content */
 .summary-content {
-  /* Initial border style */
-  border: none;
+  border: none; /* Initial border style */
   padding: 10px;
 }
 
@@ -182,6 +202,7 @@ input[type="submit"]:hover {
   margin-bottom: 20px;
 }
 
+/* Media query for smaller screens */
 @media only screen and (max-width: 600px) {
   .container {
     max-width: 85%;
@@ -191,6 +212,7 @@ input[type="submit"]:hover {
   }
 }
 
+/* Media query for even smaller screens */
 @media only screen and (max-width: 400px) {
   input[type="url"] {
     font-size: 14px;
@@ -199,6 +221,8 @@ input[type="submit"]:hover {
     margin-top: 15px;
   }
 }
+
+/* Loading spinner positioning */
 #loading {
   position: fixed;
   top: 50%;
@@ -206,11 +230,30 @@ input[type="submit"]:hover {
   transform: translate(-50%, -50%);
 }
 
+/* Loading spinner image size */
 #loading img {
   width: 50px; /* Adjust size as needed */
   height: 50px; /* Adjust size as needed */
 }
-/* Define a CSS class for blurring the main content */
+
+/* CSS class for blurring the main content */
 .blur {
   filter: blur(5px); /* Adjust blur intensity as needed */
+}
+
+/* Translate summary button styling */
+.translate-summary {
+  padding: 10px 15px;
+  background-color: rgb(38, 39, 48);
+  color: whitesmoke;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+/* Hover effect for translate summary button */
+.translate-summary:hover {
+  background-color: rgb(29, 38, 57);
 }

@@ -1,149 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Summarize YouTube Video</title>
-    <link rel="stylesheet" href="../static/styles/yt-summary.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
-    </style>
-  </head>
-  <body>
-    <div class="main-container">
-      <input type="checkbox" id="check" />
-      <div class="btn-one">
-        <label for="check">
-          <i class="fa fa-bars"></i>
-        </label>
-      </div>
-      <div class="btn-two">
-        <label for="check">
-          <i class="fa fa-times"></i>
-        </label>
-      </div>
-      <div class="side-bar">
-        <div class="msg">Select your choice</div>
-        <div class="dropdown">
-          <select class="dropdown-list" onchange="redirectPage(this.value);">
-            <option value="">Select your choice</option>
-            <option value="/summarize_text">Summarize Text</option>
-            <option value="/summarize_document">Summarize Document</option>
-            <option value="/summarize_youtube">Summarize YouTube Video</option>
-          </select>
-        </div>
-      </div>
-      <form
-        action="/summarize_youtube"
-        method="post"
-        class="container"
-        onsubmit="return submitForm()"
-      >
-        <p class="heading" style="font-weight: bold">Summarize YouTube Video</p>
-        <br />
-        <div class="field1">
-          <label>Enter YouTube Video URL:</label><br />
-          <input type="url" name="video_url" placeholder="Enter URL..." />
-        </div>
-        <div class="field2">
-          <input type="submit" name="Summarize" value="Summarize" />
-        </div>
-        <div id="result-container">
-          <h3>Processed Video Summary:</h3>
-          <p id="videoSummary" class="summary-content no-border">
-            No result available yet.
-          </p>
-          <button onclick="speakSummary(event)" class="summary-button">
-            Read Summary
-          </button>
-        </div>
-      </form>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summarize YouTube Video</title>
+  <link rel="stylesheet" href="../static/styles/yt-summary.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar toggle buttons -->
+    <input type="checkbox" id="check" />
+    <div class="btn-one">
+      <label for="check">
+        <i class="fa fa-bars"></i>
+      </label>
     </div>
-    <!-- Loading spinner -->
-    <div id="loading" style="display: none">
-      <img
-        src="../static/images/Rolling-1s-200px.svg"
-        alt="Loading..."
-        style="width: 100px; height: 100px"
-      />
+    <div class="btn-two">
+      <label for="check">
+        <i class="fa fa-times"></i>
+      </label>
     </div>
-    <script>
-      function redirectPage(selectedValue) {
-        window.location.href = selectedValue;
+    <!-- Sidebar -->
+    <div class="side-bar">
+      <div class="msg">Select your choice</div>
+      <div class="dropdown">
+        <!-- Dropdown to select different types of summaries -->
+        <select class="dropdown-list" onchange="redirectPage(this.value);">
+          <option value="">Select your choice</option>
+          <option value="/summarize_text">Summarize Text</option>
+          <option value="/summarize_document">Summarize Document</option>
+          <option value="/summarize_youtube">Summarize YouTube Video</option>
+        </select>
+      </div>
+    </div>
+    <!-- Form to summarize YouTube video -->
+    <form action="/summarize_youtube" method="post" class="container" onsubmit="return submitForm()">
+      <p class="heading" style="font-weight: bold">Summarize YouTube Video</p>
+      <br />
+      <div class="field1">
+        <!-- Input field for YouTube video URL -->
+        <label>Enter YouTube Video URL:</label><br />
+        <input type="url" name="video_url" placeholder="Enter URL..." />
+      </div>
+      <div class="field2">
+        <!-- Button to trigger summarization -->
+        <input type="submit" name="Summarize" value="Summarize" />
+      </div>
+      <!-- Container to display processed video summary -->
+      <div id="result-container">
+        <h3>Processed Video Summary:</h3>
+        <!-- Placeholder for video summary -->
+        <p id="videoSummary" class="summary-content no-border">
+          No result available yet.
+        </p>
+        <!-- Button to read out the summary -->
+        <button onclick="speakSummary(event)" class="summary-button">
+          Read Summary
+        </button>
+        <!-- Button to translate the summary -->
+        <button onclick="translateSummary(event)" class="translate-summary" style="display: none">
+          Translate Summary
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- Loading spinner -->
+  <div id="loading" style="display: none">
+    <img src="../static/images/Rolling-1s-200px.svg" alt="Loading..." style="width: 100px; height: 100px" />
+  </div>
+  <script>
+    // Function to redirect to selected page
+    function redirectPage(selectedValue) {
+      window.location.href = selectedValue;
+    }
+
+    // Function to handle form submission
+    function submitForm() {
+      const form = document.querySelector("form");
+      const formData = new FormData(form);
+
+      // Show loading spinner
+      document.getElementById("loading").style.display = "block";
+
+      // Blur the main content
+      document.querySelector(".main-container").classList.add("blur");
+
+      // Fetch and process the video summary
+      fetch(form.action, {
+        method: "POST",
+        body: JSON.stringify({
+          video_url: formData.get("video_url"),
+          language: "en",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        const videoSummary = data.result || "";
+        const resultContainer = document.getElementById("videoSummary");
+
+        if (resultContainer) {
+          // Display the processed video summary
+          resultContainer.innerHTML = videoSummary;
+          // Add border to the result container
+          resultContainer.classList.add("result-border");
+
+          // Show translate summary button
+          showTranslateButton();
+        } else {
+          console.error("Error: 'videoSummary' not found in the HTML");
+        }
+
+        // Hide loading spinner
+        document.getElementById("loading").style.display = "none";
+
+        // Remove blur from the main content
+        document.querySelector(".main-container").classList.remove("blur");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Hide loading spinner
+        document.getElementById("loading").style.display = "none";
+
+        // Remove blur from the main content
+        document.querySelector(".main-container").classList.remove("blur");
+      });
+
+      // Prevent the form from navigating away
+      return false;
+    }
+
+    // Function to read out the summary
+    function speakSummary(event) {
+      event.preventDefault(); // Prevent form submission
+
+      const videoSummary = document.getElementById("videoSummary").textContent;
+
+      if ("speechSynthesis" in window) {
+        const synthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(videoSummary);
+
+        synthesis.speak(utterance);
+      } else {
+        alert("Speech synthesis is not supported in your browser.");
       }
+    }
 
-      function submitForm() {
-        const form = document.querySelector("form");
-        const formData = new FormData(form);
+    // Function to show translate summary button
+    function showTranslateButton() {
+      const translateButton = document.querySelector(".translate-summary");
+      if (translateButton) {
+        translateButton.style.display = "block";
+      }
+    }
 
-        // Show loading spinner
-        document.getElementById("loading").style.display = "block";
+    // Function to translate the summary
+    function translateSummary(event) {
+      event.preventDefault(); // Prevent the default form submission behavior
 
-        // Blur the main content
-        document.querySelector(".main-container").classList.add("blur");
+      const resultContainer = document.getElementById("videoSummary");
+      const originalText = resultContainer.textContent;
 
-        fetch(form.action, {
+      if (resultContainer) {
+        const targetLanguage = "mr";
+
+        // Make API call to translate summary text
+        fetch(`/translate`, {
           method: "POST",
-          body: JSON.stringify({
-            video_url: formData.get("video_url"),
-            language: "en",
-          }),
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            text: originalText,
+            target_language: targetLanguage,
+          }),
         })
-          .then((response) => response.json())
-          .then((data) => {
-            const videoSummary = data.result || "";
-            const resultContainer = document.getElementById("videoSummary");
-
-            if (resultContainer) {
-              resultContainer.innerHTML = videoSummary;
-              // Add border to the result container
-              resultContainer.classList.add("result-border");
-            } else {
-              console.error("Error: 'videoSummary' not found in the HTML");
-            }
-
-            // Hide loading spinner
-            document.getElementById("loading").style.display = "none";
-
-            // Remove blur from the main content
-            document.querySelector(".main-container").classList.remove("blur");
-          })
-
-          .catch((error) => {
-            console.error("Error:", error);
-            // Hide loading spinner
-            document.getElementById("loading").style.display = "none";
-
-            // Remove blur from the main content
-            document.querySelector(".main-container").classList.remove("blur");
-          });
-
-        // Prevent the form from navigating away
-        return false;
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            // Update the result container with the translated text
+            resultContainer.textContent = data.result;
+          } else {
+            console.error("Error: Failed to translate summary");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      } else {
+        console.error("Error: 'videoSummary' not found in the HTML");
       }
-
-      function speakSummary(event) {
-        event.preventDefault(); // Prevent form submission
-
-        const videoSummary =
-          document.getElementById("videoSummary").textContent;
-
-        if ("speechSynthesis" in window) {
-          const synthesis = window.speechSynthesis;
-          const utterance = new SpeechSynthesisUtterance(videoSummary);
-
-          synthesis.speak(utterance);
-        } else {
-          alert("Speech synthesis is not supported in your browser.");
-        }
-      }
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>
