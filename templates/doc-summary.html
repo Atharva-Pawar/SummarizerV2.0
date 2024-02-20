@@ -73,6 +73,9 @@
         <button onclick="speakSummary()" class="speak-summary">
           Read Summary
         </button>
+        <button onclick="translateSummary()" class="translate-summary">
+          Translate Summary
+        </button>        
       </div>
     </div>
 
@@ -166,6 +169,40 @@
           } else {
             console.error("Error: No processed text to speak");
           }
+        } else {
+          console.error("Error: 'docSummary' not found in the HTML");
+        }
+      }
+      function translateSummary() {
+        const resultContainer = document.getElementById("docSummary");
+
+        if (resultContainer) {
+          const processedText = resultContainer.innerText;
+          const targetLanguage = "mr"; // Define your target language here
+
+          // Make API call to translate summary text
+          fetch("/translate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              text: processedText,
+              target_language: targetLanguage,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.result) {
+                // Update the result container with the translated text
+                resultContainer.innerText = data.result;
+              } else {
+                console.error("Error: Failed to translate summary");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
         } else {
           console.error("Error: 'docSummary' not found in the HTML");
         }

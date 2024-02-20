@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, jsonify
 from txtai.pipeline import Summary
 from pytube import YouTube
+from PyPDF2 import PdfReader
 from youtube_transcript_api import YouTubeTranscriptApi
 from googletrans import Translator
 import os

@@ -217,3 +217,18 @@ h2 {
     margin-left: 20px;
   }
 }
+.translate-summary {
+  background-color: rgb(38, 39, 48);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.translate-summary:hover {
+  background-color: rgb(29, 38, 57);
+}
