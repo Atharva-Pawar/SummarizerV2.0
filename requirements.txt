@@ -1,0 +1,6 @@
+flask 
+googletrans
+txtai 
+pyPDF2 
+pytube 
+youtube_transcript_api
