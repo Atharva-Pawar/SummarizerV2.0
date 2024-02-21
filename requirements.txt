@@ -1,6 +1,6 @@
-flask 
-googletrans
-txtai 
-pyPDF2 
-pytube 
-youtube_transcript_api
+flask==3.0.1
+googletrans==4.0.0rc1
+PyPDF2==3.0.1
+pytube==15.0.0
+txtai==6.3.0
+youtube_transcript_api==0.6.2
